@@ -1,3 +1,4 @@
+# destroy.yml is responsible for destroying the instances.
 ---
 - name: Destroy
   hosts: localhost

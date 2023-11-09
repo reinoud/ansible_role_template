@@ -1,5 +1,5 @@
-
----
+# verify.yml is responsible for verifying that the nginx service is installed and running on the target host. 
+# If the service is not installed, the playbook should fail. If the service is not running, the playbook should fail.
 - name: Check if nginx is installed and running
   hosts: all
   gather_facts: no
