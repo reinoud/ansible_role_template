@@ -1,7 +1,8 @@
-Role Name
+Example for an Ansible role tested with molecule
 =========
 
-This is a proof of concept to demonstrate the molecule testing framwork. The Ansible role is tested on two different OSses (Debian and Ubuntu), which are running in Docker containers
+This is a proof of concept to demonstrate the molecule testing framwork. The Ansible role is tested on two different OSses (Debian and Ubuntu), which are running in Docker containers.
+The role itself is not very exiting: it installs the package nginx. The testcase is only checking if the nginx executable is found in the search path. Just a proof of concept :-)
 
 Requirements
 ------------
