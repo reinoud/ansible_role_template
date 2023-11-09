@@ -62,7 +62,7 @@ Running
 
 `molecule test` will do all the stages of the test:
 
-  - set up two hosts (running in dockers)
+  - set up three hosts (running in dockers)
   - run the playbook that calles the ansible role
   - verify that the desired state has actually been reached
   - tear down the testing environment (i.e. stopping the docker containers)
