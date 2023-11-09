@@ -29,12 +29,10 @@ galaxy_info:
   # https://galaxy.ansible.com/api/v1/platforms/
   #
   platforms:
-  - name: Ubuntu
-    versions:
-    - all
-  - name: Debian
-    versions:
-    - all
-  
-#galaxy_tags: []
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
 dependencies: []

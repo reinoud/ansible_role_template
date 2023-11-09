@@ -3,6 +3,6 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: test myrole
+    - name: Test myrole
       ansible.builtin.include_role:
         name: 'myrole'

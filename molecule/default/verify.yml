@@ -1,15 +1,10 @@
-# verify.yml is responsible for verifying that the nginx service is installed and running on the target host. 
+# verify.yml is responsible for verifying that the nginx service is installed and running on the target host.
 # If the service is not installed, the playbook should fail. If the service is not running, the playbook should fail.
 - name: Check if nginx is installed and running
   hosts: all
-  gather_facts: no
+  gather_facts: false
   tasks:
-    - name: Check if nginx is installed
-      command: which nginx
+    - name: Check if nginx is installed # noqa no-changed-when
+      ansible.builtin.command: 'which nginx'
       register: nginx_installed
       failed_when: nginx_installed.rc != 0
-
-    # - name: Check if nginx is running
-    #   command: systemctl is-active nginx
-    #   register: nginx_running
-    #   failed_when: nginx_running.stdout != "active"
