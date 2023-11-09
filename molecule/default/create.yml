@@ -5,7 +5,7 @@
     molecule_inventory:
       all:
         hosts: {}
-        molecule: {}
+#        molecule: {}
   tasks:
     - name: Create a container
       community.docker.docker_container:
@@ -17,9 +17,9 @@
       register: result
       loop: "{{ molecule_yml.platforms }}"
 
-    - name: Print some info
-      ansible.builtin.debug:
-        msg: "{{ result.results }}"
+    # - name: Print some info
+    #   ansible.builtin.debug:
+    #     msg: "{{ result.results }}"
 
     - name: Fail if container is not running
       when: >
@@ -74,6 +74,6 @@
       register: result
       changed_when: false
 
-    - name: Display uname info
-      ansible.builtin.debug:
-        msg: "{{ result.stdout }}"
+    # - name: Display uname info
+    #   ansible.builtin.debug:
+    #     msg: "{{ result.stdout }}"

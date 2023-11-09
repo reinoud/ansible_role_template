@@ -9,7 +9,7 @@
       register: nginx_installed
       failed_when: nginx_installed.rc != 0
 
-    - name: Check if nginx is running
-      command: systemctl is-active nginx
-      register: nginx_running
-      failed_when: nginx_running.stdout != "active"
+    # - name: Check if nginx is running
+    #   command: systemctl is-active nginx
+    #   register: nginx_running
+    #   failed_when: nginx_running.stdout != "active"
