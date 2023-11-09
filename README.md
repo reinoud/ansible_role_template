@@ -48,6 +48,8 @@ Running
   - verify that the desired state has actually been reached
   - tear down the testing environment (i.e. stopping the docker containers)
 
+(if you do not want to run the complete sequence, molecule has other commandline options too. see `molecule --help`)
+
 ```bash
 $ molecule test
 
