@@ -1,0 +1,16 @@
+---
+
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  # use images with python3 installed
+  - name: instance-ubuntu
+    image: mipguerrero26/ubuntu-python3
+    pre_build_image: true
+  - name: instance-debian
+    image: python:3.12.0-bookworm
+    pre_build_image: true
+provisioner:
+  name: ansible
