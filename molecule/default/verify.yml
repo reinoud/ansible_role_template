@@ -1,10 +1,14 @@
-# verify.yml is responsible for verifying that the nginx service is installed and running on the target host.
+# verify.yml is responsible for verifying that the apache service is installed and running on the target host.
 # If the service is not installed, the playbook should fail. If the service is not running, the playbook should fail.
-- name: Check if nginx is installed and running
+- name: Check if apache is installed and running
   hosts: all
-  gather_facts: false
+  # facts are needed to set ansible_os_family
+  gather_facts: true
   tasks:
-    - name: Check if nginx is installed # noqa no-changed-when
-      ansible.builtin.command: 'which nginx'
-      register: nginx_installed
-      failed_when: nginx_installed.rc != 0
+    - name: Include vars for linux family
+      ansible.builtin.include_vars:
+        file: "{{ lookup('env', 'MOLECULE_SCENARIO_DIRECTORY') }}/verify_vars/{{ ansible_os_family }}.yml"
+    - name: Check if apache is installed # noqa no-changed-when
+      ansible.builtin.command: 'which {{ myrole_testbinary }}'
+      register: apache_installed
+      failed_when: apache_installed.rc != 0

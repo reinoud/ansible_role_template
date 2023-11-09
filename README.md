@@ -1,8 +1,8 @@
 Example for an Ansible role tested with molecule
 =========
 
-This is a proof of concept to demonstrate the molecule testing framwork. The Ansible role is tested on two different OSses (Debian and Ubuntu), which are running in Docker containers.
-The role itself is not very exiting: it installs the package nginx. The testcase is only checking if the nginx executable is found in the search path. Just a proof of concept :-)
+This is a proof of concept to demonstrate the molecule testing framwork. The Ansible role is tested on three different OSses (Debian, Ubuntu, Orcale Linux), which are running in Docker containers.
+The role itself is not very exiting: it installs the package apache. The testcase is only checking if the apache executable is found in the search path. Just a proof of concept :-)
 
 Requirements
 ------------
@@ -38,6 +38,25 @@ Configuration
 -------------
 The configuration per scenario is defined in `molecule/<scenario>/molecule.yml`
 
+Multi platform considerations
+-----------------------------
+
+When testing a role that runs on different flavors of Linux, some details like package names might be different (here: the package name is `apache2` on Debian-based distributions, and `httpd` on Redhat-based distributions). To overcome this in the role itself, the usual technique is to include variables based on OS family:
+
+```yaml
+- name: Debian-family specific tasks
+  ansible.builtin.include_vars: debian.yml
+  when: ansible_os_family == "Debian"
+  ```
+
+In the verify phase, it might be needed as well. Since the role variables are not reachable, you can include variables needed for testing on a family base like this (variables defined under the molecule scenario itself):
+
+```yaml
+    - name: Include vars for linux family
+      ansible.builtin.include_vars:
+        file: "{{ lookup('env', 'MOLECULE_SCENARIO_DIRECTORY') }}/verify_vars/{{ ansible_os_family }}.yml"
+```
+
 Running
 ------------
 
@@ -52,7 +71,6 @@ Running
 
 ```bash
 $ molecule test
-
 WARNING  Driver docker does not provide a schema.
 INFO     default scenario test matrix: dependency, cleanup, destroy, syntax, create, prepare, converge, idempotence, side_effect, verify, cleanup, destroy
 INFO     Performing prerun with role_name_check=0...
@@ -86,10 +104,12 @@ PLAY [Create] ******************************************************************
 TASK [Create a container] ******************************************************
 ok: [localhost] => (item={'image': 'mipguerrero26/ubuntu-python3', 'name': 'instance-ubuntu', 'pre_build_image': True})
 ok: [localhost] => (item={'image': 'python:3.12.0-bookworm', 'name': 'instance-debian', 'pre_build_image': True})
+ok: [localhost] => (item={'image': 'aptplatforms/oraclelinux-python', 'name': 'instance-oracle', 'pre_build_image': True})
 
 TASK [Add container to molecule_inventory] *************************************
 ok: [localhost] => (item=instance-ubuntu)
 ok: [localhost] => (item=instance-debian)
+ok: [localhost] => (item=instance-oracle)
 
 TASK [Dump molecule_inventory] *************************************************
 changed: [localhost]
@@ -106,10 +126,12 @@ PLAY [Validate that inventory was refreshed] ***********************************
 
 TASK [Check uname] *************************************************************
 ok: [instance-debian]
+ok: [instance-oracle]
 ok: [instance-ubuntu]
 
 PLAY RECAP *********************************************************************
 instance-debian            : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+instance-oracle            : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 instance-ubuntu            : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 localhost                  : ok=4    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 
@@ -122,16 +144,29 @@ PLAY [Converge] ****************************************************************
 TASK [Gathering Facts] *********************************************************
 ok: [instance-debian]
 ok: [instance-ubuntu]
+ok: [instance-oracle]
 
 TASK [Test myrole] *************************************************************
 
-TASK [myrole : Install package nginx] ******************************************
+TASK [myrole : Debian-family specific tasks] ***********************************
+ok: [instance-debian]
+skipping: [instance-oracle]
+ok: [instance-ubuntu]
+
+TASK [myrole : Redhat-family specific tasks] ***********************************
+skipping: [instance-debian]
+ok: [instance-oracle]
+skipping: [instance-ubuntu]
+
+TASK [myrole : Install package apache] *****************************************
+ok: [instance-oracle]
 ok: [instance-debian]
 ok: [instance-ubuntu]
 
 PLAY RECAP *********************************************************************
-instance-debian            : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-instance-ubuntu            : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+instance-debian            : ok=3    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+instance-oracle            : ok=3    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+instance-ubuntu            : ok=3    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
 
 INFO     Running default > idempotence
 
@@ -139,17 +174,30 @@ PLAY [Converge] ****************************************************************
 
 TASK [Gathering Facts] *********************************************************
 ok: [instance-debian]
+ok: [instance-oracle]
 ok: [instance-ubuntu]
 
 TASK [Test myrole] *************************************************************
 
-TASK [myrole : Install package nginx] ******************************************
+TASK [myrole : Debian-family specific tasks] ***********************************
+ok: [instance-debian]
+skipping: [instance-oracle]
+ok: [instance-ubuntu]
+
+TASK [myrole : Redhat-family specific tasks] ***********************************
+skipping: [instance-debian]
+ok: [instance-oracle]
+skipping: [instance-ubuntu]
+
+TASK [myrole : Install package apache] *****************************************
+ok: [instance-oracle]
 ok: [instance-debian]
 ok: [instance-ubuntu]
 
 PLAY RECAP *********************************************************************
-instance-debian            : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-instance-ubuntu            : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+instance-debian            : ok=3    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+instance-oracle            : ok=3    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+instance-ubuntu            : ok=3    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
 
 INFO     Idempotence completed successfully.
 INFO     Running default > side_effect
@@ -157,15 +205,27 @@ WARNING  Skipping, side effect playbook not configured.
 INFO     Running default > verify
 INFO     Running Ansible Verifier
 
-PLAY [Check if nginx is installed and running] *********************************
+PLAY [Check if apache is installed and running] ********************************
 
-TASK [Check if nginx is installed] *********************************************
+TASK [Gathering Facts] *********************************************************
+ok: [instance-debian]
+ok: [instance-oracle]
+ok: [instance-ubuntu]
+
+TASK [Include vars for linux family] *******************************************
+ok: [instance-debian]
+ok: [instance-oracle]
+ok: [instance-ubuntu]
+
+TASK [Check if apache is installed] ********************************************
 changed: [instance-debian]
 changed: [instance-ubuntu]
+changed: [instance-oracle]
 
 PLAY RECAP *********************************************************************
-instance-debian            : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
-instance-ubuntu            : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+instance-debian            : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+instance-oracle            : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+instance-ubuntu            : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
 
 INFO     Verifier completed successfully.
 INFO     Running default > cleanup

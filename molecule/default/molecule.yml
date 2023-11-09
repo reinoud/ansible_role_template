@@ -12,5 +12,9 @@ platforms:
   - name: instance-debian
     image: python:3.12.0-bookworm
     pre_build_image: true
+  - name: instance-oracle
+    image: aptplatforms/oraclelinux-python
+    pre_build_image: true
+
 # provisioner:
 #   name: ansible
