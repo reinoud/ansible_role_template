@@ -1,3 +1,5 @@
 ---
-# defaults file for myrole
-myrole_packagename: ''
+# defaults file for {{ cookiecutter.rolename }}
+# by convention, all variables are in lower case and use underscores, and
+# should start with {{ cookiecutter.rolename_slug }} to avoid conflicts
+{{ cookiecutter.rolename_slug }}_packagename: ''
