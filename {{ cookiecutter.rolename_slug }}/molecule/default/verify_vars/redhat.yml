@@ -1,2 +1,2 @@
 ---
-myrole_testbinary: 'httpd'
+{{ cookiecutter.rolename_slug }}_testbinary: 'httpd'

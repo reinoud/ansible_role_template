@@ -1,2 +1,2 @@
 ---
-myrole_testbinary: 'apache2'
+{{ cookiecutter.rolename_slug }}_testbinary: 'apache2'

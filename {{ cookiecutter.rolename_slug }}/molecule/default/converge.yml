@@ -3,6 +3,6 @@
 - name: Converge
   hosts: all
   tasks:
-    - name: Test myrole
+    - name: "Test {{ cookiecutter.rolename }}"
       ansible.builtin.include_role:
-        name: 'myrole'
+        name: '{{ cookiecutter.rolename_slug }}'

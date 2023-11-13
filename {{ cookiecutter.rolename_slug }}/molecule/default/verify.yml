@@ -9,6 +9,6 @@
       ansible.builtin.include_vars:
         file: "{{ '{{' }} lookup('env', 'MOLECULE_SCENARIO_DIRECTORY') }}/verify_vars/{{ '{{' }} ansible_os_family {{ '}}' }}.yml"
     - name: Check if apache is installed # noqa no-changed-when
-      ansible.builtin.command: 'which {{ "{{" }} myrole_testbinary {{ "}}" }}'
+      ansible.builtin.command: 'which {{ "{{" }} {{ cookiecutter.rolename_slug }}_testbinary {{ "}}" }}'
       register: apache_installed
       failed_when: apache_installed.rc != 0
