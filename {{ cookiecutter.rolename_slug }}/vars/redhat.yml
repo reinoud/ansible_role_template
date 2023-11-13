@@ -1,2 +1,3 @@
 ---
-myrole_packagename: 'httpd'
+# RedHat specific variables for {{ cookiecutter.rolename }}
+{{ cookiecutter.rolename_slug}}_packagename: 'httpd'

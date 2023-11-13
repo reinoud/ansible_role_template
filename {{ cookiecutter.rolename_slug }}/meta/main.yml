@@ -24,4 +24,7 @@ galaxy_info:
     - name: Debian
       versions:
         - all
+    - name: OracleLinux
+      versions:
+        - all
 dependencies: []

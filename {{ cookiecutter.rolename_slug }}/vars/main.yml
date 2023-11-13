@@ -1,2 +1,2 @@
 ---
-# vars file for myrole
+# General vars file for {{ cookiecutter.rolename_slug }}, for all Linux flavors
