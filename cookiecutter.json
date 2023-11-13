@@ -1,5 +1,5 @@
 {
-  "rolename": "Cookiecutter Website Simple",
-  "rolename_oslug": "{{ cookiecutter.rolename.lower().replace(' ', '_') }}",
+  "rolename": "apache",
+  "rolename_slug": "{{ cookiecutter.rolename.lower().replace(' ', '_') }}",
   "author": "Anonymous"
 }
