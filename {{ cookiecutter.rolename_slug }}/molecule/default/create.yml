@@ -60,4 +60,3 @@
       ansible.builtin.raw: uname -a
       register: result
       changed_when: false
-
