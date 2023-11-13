@@ -1,5 +1,5 @@
 galaxy_info:
-  author: "{{ cookiecutter.rolename_author }}"
+  author: "{{ cookiecutter.author }}"
   description: "{{ cookiecutter.rolename}}"
   namespace: "itc"
   company: "IT Creations"
