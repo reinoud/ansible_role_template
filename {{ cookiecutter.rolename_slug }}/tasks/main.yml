@@ -1,17 +1,32 @@
 ---
-- name: Debian-family specific tasks
-  ansible.builtin.include_vars: debian.yml
-  when: ansible_os_family == "Debian"
-  tags:
-    - unbound
+# # set variables for different OS families
+# - name: Set Debian-family specific variables
+#   ansible.builtin.include_vars: debian.yml
+#   when: ansible_os_family == "Debian"
+#   tags:
+#     - unbound
 
-- name: Redhat-family specific tasks
-  ansible.builtin.include_vars: redhat.yml
-  when: ansible_os_family == "RedHat"
-  tags:
-    - unbound
+# - name: Set Redhat-family specific variables
+#   ansible.builtin.include_vars: redhat.yml
+#   when: ansible_os_family == "RedHat"
+#   tags:
+#     - unbound
+# set variables for different OS families
+- name: "Set {{ '{{' }} ansible_os_family {{ '}}' }}-specific variables"
+  ansible.builtin.include_vars: "{{ '{{' }} ansible_os_family | lower {{ '}}' }}.yml"
 
-- name: Install package apache
-  ansible.builtin.package:
-    name: "{{ '{{' }} {{ cookiecutter.rolename_slug}}_packagename {{ '}}' }}"
-    state: present
+# Check prequisites
+- name: Pre-flight checks
+  ansible.builtin.include_tasks: preflight.yml
+
+# Install package
+- name: Install needed packages
+  ansible.builtin.include_tasks: install_packages.yml
+
+# Configure package
+- name: Configure package
+  ansible.builtin.include_tasks: configure_packages.yml
+
+# Configure services
+- name: Configure services
+  ansible.builtin.include_tasks: configure_services.yml

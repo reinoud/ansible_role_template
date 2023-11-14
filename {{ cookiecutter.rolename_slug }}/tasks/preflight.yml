@@ -1,0 +1,14 @@
+---
+# The preflight checks are meant to check everything that should be present or working before doing any work
+# in the role.
+# If any of the checks fail, the role will fail immediately.
+# This is to prevent the role from doing anything that might break the system.
+
+- name: Check OS family
+  assert:
+    that:
+      - "'{{ '{{' }} ansible_os_family {{ '}}' }}' in {{ cookiecutter.rolename_slug }}_supported_ansible_os_families"
+    fail_msg: "This role is not supported on this OS"
+
+# Check all required variables here
+# <TODO>

@@ -16,5 +16,3 @@ platforms:
     image: aptplatforms/oraclelinux-python
     pre_build_image: true
 
-# provisioner:
-#   name: ansible

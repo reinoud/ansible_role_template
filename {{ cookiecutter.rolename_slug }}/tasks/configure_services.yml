@@ -1,0 +1,11 @@
+---
+# Configure the installed services state
+
+- name: Make sure service is enabled and starts at boot
+  ansible.builtin.systemd:
+    name: "{{ '{{' }} {{ cookiecutter.rolename_slug}}_servicename {{ '}}' }}"
+    enabled: yes
+    state: started
+  # Only run this task if we are not in a molecule test run since systemd
+  # is not available when running in docker
+  when: "not in_molecule_test_run"

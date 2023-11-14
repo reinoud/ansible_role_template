@@ -1,3 +1,4 @@
 ---
 # RedHat specific variables for {{ cookiecutter.rolename }}
 {{ cookiecutter.rolename_slug}}_packagename: 'httpd'
+{{ cookiecutter.rolename_slug}}_servicename: 'httpd.service'

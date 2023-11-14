@@ -6,3 +6,5 @@
     - name: "Test {{ cookiecutter.rolename }}"
       ansible.builtin.include_role:
         name: '{{ cookiecutter.rolename_slug }}'
+      vars:
+        in_molecule_test_run: true
