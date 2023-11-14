@@ -28,4 +28,5 @@
         name: "{{ '{{' }} item.name {{ '}}' }} }}"
         state: absent
         auto_remove: true
+        cleanup: true
       loop: "{{ '{{' }} molecule_yml.platforms {{ '}}' }}"
