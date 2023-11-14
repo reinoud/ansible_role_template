@@ -16,3 +16,16 @@
         dest: "{{ '{{' }} molecule_instance_config {{ '}}' }}"
         mode: '0600'
       when: server.changed | default(false) | bool  # noqa no-handler
+    - name: Stop containers
+      community.docker.docker_container:
+        name: "{{ '{{' }} item.name {{ '}}' }}"
+        image: "{{ '{{' }} item.image {{ '}}' }}"
+        force_kill: true
+        state: stopped
+      loop: "{{ '{{' }} molecule_yml.platforms {{ '}}' }}"
+    - name: Remove containers
+      community.docker.docker_container:
+        name: "{{ '{{' }} item.name {{ '}}' }} }}"
+        state: absent
+        auto_remove: true
+      loop: "{{ '{{' }} molecule_yml.platforms {{ '}}' }}"

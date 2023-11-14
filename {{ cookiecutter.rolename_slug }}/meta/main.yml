@@ -1,3 +1,4 @@
+---
 galaxy_info:
   author: "{{ cookiecutter.author }}"
   description: "{{ cookiecutter.rolename}}"
