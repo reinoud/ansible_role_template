@@ -1,6 +1,6 @@
 ---
 # Add needed repositories and install packages
-- name: Install package apache
+- name: Install example package
   ansible.builtin.package:
     name: "{{ '{{' }} {{ cookiecutter.rolename_slug}}_packagename {{ '}}' }}"
     state: present

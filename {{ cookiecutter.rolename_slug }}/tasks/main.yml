@@ -1,16 +1,4 @@
 ---
-# # set variables for different OS families
-# - name: Set Debian-family specific variables
-#   ansible.builtin.include_vars: debian.yml
-#   when: ansible_os_family == "Debian"
-#   tags:
-#     - unbound
-
-# - name: Set Redhat-family specific variables
-#   ansible.builtin.include_vars: redhat.yml
-#   when: ansible_os_family == "RedHat"
-#   tags:
-#     - unbound
 # set variables for different OS families
 - name: "Set {{ '{{' }} ansible_os_family {{ '}}' }}-specific variables"
   ansible.builtin.include_vars: "{{ '{{' }} ansible_os_family | lower {{ '}}' }}.yml"
