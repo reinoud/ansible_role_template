@@ -1,5 +1,5 @@
 ---
-# General vars file for {{ cookiecutter.rolename_slug }}, for all Linux flavors
+# General vars file for {{ cookiecutter.rolename }}, for all Linux flavors
 {{ cookiecutter.rolename_slug}}_supported_ansible_os_families:
   - 'Debian'
   - 'RedHat'

@@ -1,5 +1,5 @@
 ---
 # defaults file for {{ cookiecutter.rolename }}
 # by convention, all variables are in lower case and use underscores, and
-# should start with {{ cookiecutter.rolename_slug }} to avoid conflicts
-{{ cookiecutter.rolename_slug }}_packagename: ''
+# should start with {{ cookiecutter.rolename }} to avoid conflicts
+{{ cookiecutter.rolename }}_packagename: ''
