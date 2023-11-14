@@ -27,11 +27,6 @@ Including an example of how to use your role (for instance, with variables passe
       roles:
          - {{ cookiecutter.rolename_slug }}
 
-License
--------
-
-BSD
-
 Author Information
 ------------------
-{{ cookiecutter.author }}
+{{ cookiecutter.author }} <{{cookiecutter.email}}>
