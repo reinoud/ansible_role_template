@@ -2,7 +2,7 @@
 if [ "{{ cookiecutter.generate_git_repository }}" == "yes" ];
 then
     # Initialize git repository
-    git init
+    git init -b main
     # Add all files and directories
     git  add .
     # Commit changes
