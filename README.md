@@ -19,6 +19,7 @@ Template Variables
 - rolename_slug: the valid name as used in Ansible and on the filesystem
 - name: The name of the author.
 - email: The email address of the author.
+- generate_git_repository: create a local git repository after the role has been created
 
 
 Testing

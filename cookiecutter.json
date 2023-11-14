@@ -1,6 +1,7 @@
 {
-  "rolename": "apache",
+  "rolename": "My Ansible Role",
   "rolename_slug": "{{ cookiecutter.rolename.lower().replace(' ', '_') }}",
   "author": "John Doe",
-  "email": "{{ cookiecutter.author.lower().replace(' ', '.') }}@itcreation.nl"
+  "email": "{{ cookiecutter.author.lower().replace(' ', '.') }}@itcreation.nl",
+  "generate_git_repository": ["yes", "no"]
 }

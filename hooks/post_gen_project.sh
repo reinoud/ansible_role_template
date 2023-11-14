@@ -1,9 +1,12 @@
 #!/bin/bash
-# Initialize git repository
-git init
-# Add all files and directories
-git  add .
-# Commit changes
-git commit -m "Initial commit"
+if [ "{{ cookiecutter.generate_git_repository }}" == "yes" ];
+then
+    # Initialize git repository
+    git init
+    # Add all files and directories
+    git  add .
+    # Commit changes
+    git commit -m "Initial commit"
 
-echo "initialized git repo"
+    echo "initialized git repo"
+fi
