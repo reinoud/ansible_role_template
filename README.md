@@ -22,6 +22,20 @@ General usage overview
 - Follow the prompts to customize the generated role.
 - search for TODO in the generated role to change example code in something useable
 
+Limitations
+-----
+As a result of the architecture of Docker, `systemd` is not available in containers that mimic a full VM. This means that the Ansible role cannot enable and start a real service.
+To be able to work around this limitation, the scenario is called with the variable `in_molecule_test_run`, so the code can check this:
+
+```
+- name: Make sure service is enabled and starts at boot
+  ansible.builtin.systemd:
+    name: "{{ '{{' }} {{ cookiecutter.rolename_slug}}_servicename {{ '}}' }}"
+    enabled: yes
+    state: started
+  when: "not in_molecule_test_run"
+```
+
 Cookiecutter Template Variables
 ------
 Cookiecutter has some variables (defined in `cookiecutter.json`), that are used in the template. The values are asked (with some sane generated defaults) when the template is called with the `cookiecutter` command:
@@ -65,7 +79,7 @@ flavors. To make this work:
 - install the Molecule docker driver (`pip3 install 'molecule-plugins[docker]'`)
 - when it is not working, you might have to downgrade the Python requests library (`pip3 install requests==2.28.1`)
 
-to start a full test run, execute `molecule test` from a directory within the role.
+to start a full test run, execute `molecule test` from a directory within the role. The generated role should have a working test setup right after it is generated. This code is checked in in the locally initialised git repository, so you have a working setup to go back to if you break something during development.
 
 Example usage of the template
 ----
@@ -107,4 +121,261 @@ Initialized empty Git repository in /Users/reinoudvanleeuwen/git/ansible/my_ansi
  create mode 100644 vars/main.yml
  create mode 100644 vars/redhat.yml
 initialized git repo
+```
+
+Example of running the test
+------
+
+This output shows running the tests with a freshly generated Ansible role. The role installs the Apache webserver on 3 Linux flavors (Debian, Ubuntu, Oracle Linux). The test only checks if the binary is present. More thorough testing is advised for real-world roles.
+
+Command:
+```
+molecule test
+```
+
+Output
+```
+WARNING  Driver docker does not provide a schema.
+INFO     default scenario test matrix: dependency, cleanup, destroy, syntax, create, prepare, converge, idempotence, side_effect, verify, cleanup, destroy
+INFO     Performing prerun with role_name_check=0...
+INFO     Using /Users/reinoudvanleeuwen/.ansible/roles/itc.my_ansible_role symlink to current repository in order to enable Ansible to find the role using its expected full name.
+INFO     Running default > dependency
+WARNING  Skipping, missing the requirements file.
+WARNING  Skipping, missing the requirements file.
+INFO     Running default > cleanup
+WARNING  Skipping, cleanup playbook not configured.
+INFO     Running default > destroy
+INFO     Sanity checks: 'docker'
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Populate instance config] ************************************************
+ok: [localhost]
+
+TASK [Dump instance config] ****************************************************
+skipping: [localhost]
+
+TASK [Stop containers] *********************************************************
+ok: [localhost] => (item={'image': 'mipguerrero26/ubuntu-python3', 'name': 'instance-ubuntu', 'pre_build_image': True})
+ok: [localhost] => (item={'image': 'python:3.12.0-bookworm', 'name': 'instance-debian', 'pre_build_image': True})
+ok: [localhost] => (item={'image': 'aptplatforms/oraclelinux-python', 'name': 'instance-oracle', 'pre_build_image': True})
+
+TASK [Remove containers] *******************************************************
+ok: [localhost] => (item={'image': 'mipguerrero26/ubuntu-python3', 'name': 'instance-ubuntu', 'pre_build_image': True})
+ok: [localhost] => (item={'image': 'python:3.12.0-bookworm', 'name': 'instance-debian', 'pre_build_image': True})
+ok: [localhost] => (item={'image': 'aptplatforms/oraclelinux-python', 'name': 'instance-oracle', 'pre_build_image': True})
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=3    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Running default > syntax
+
+playbook: /Users/reinoudvanleeuwen/blah/cookiecuttertest/my_ansible_role/molecule/default/converge.yml
+INFO     Running default > create
+
+PLAY [Create] ******************************************************************
+
+TASK [Create a container] ******************************************************
+changed: [localhost] => (item={'image': 'mipguerrero26/ubuntu-python3', 'name': 'instance-ubuntu', 'pre_build_image': True})
+changed: [localhost] => (item={'image': 'python:3.12.0-bookworm', 'name': 'instance-debian', 'pre_build_image': True})
+changed: [localhost] => (item={'image': 'aptplatforms/oraclelinux-python', 'name': 'instance-oracle', 'pre_build_image': True})
+
+TASK [Add container to molecule_inventory] *************************************
+ok: [localhost] => (item=instance-ubuntu)
+ok: [localhost] => (item=instance-debian)
+ok: [localhost] => (item=instance-oracle)
+
+TASK [Dump molecule_inventory] *************************************************
+changed: [localhost]
+
+TASK [Force inventory refresh] *************************************************
+
+TASK [Fail if molecule group is missing] ***************************************
+ok: [localhost] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+PLAY [Validate that inventory was refreshed] ***********************************
+
+TASK [Check uname] *************************************************************
+ok: [instance-debian]
+ok: [instance-ubuntu]
+ok: [instance-oracle]
+
+PLAY RECAP *********************************************************************
+instance-debian            : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+instance-oracle            : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+instance-ubuntu            : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+localhost                  : ok=4    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+INFO     Running default > prepare
+WARNING  Skipping, prepare playbook not configured.
+INFO     Running default > converge
+
+PLAY [Converge] ****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [instance-debian]
+ok: [instance-ubuntu]
+ok: [instance-oracle]
+
+TASK [Test My Ansible Role] ****************************************************
+
+TASK [my_ansible_role : Set Debian-specific variables] *************************
+ok: [instance-debian]
+ok: [instance-oracle]
+ok: [instance-ubuntu]
+
+TASK [my_ansible_role : Pre-flight checks] *************************************
+included: /Users/reinoudvanleeuwen/blah/cookiecuttertest/my_ansible_role/tasks/preflight.yml for instance-debian, instance-oracle, instance-ubuntu
+
+TASK [my_ansible_role : Check OS family] ***************************************
+ok: [instance-debian] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+ok: [instance-oracle] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+ok: [instance-ubuntu] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [my_ansible_role : Install needed packages] *******************************
+included: /Users/reinoudvanleeuwen/blah/cookiecuttertest/my_ansible_role/tasks/install_packages.yml for instance-debian, instance-oracle, instance-ubuntu
+
+TASK [my_ansible_role : Install example package] *******************************
+ok: [instance-oracle]
+ok: [instance-debian]
+ok: [instance-ubuntu]
+
+TASK [my_ansible_role : Configure package] *************************************
+
+TASK [my_ansible_role : Configure services] ************************************
+included: /Users/reinoudvanleeuwen/blah/cookiecuttertest/my_ansible_role/tasks/configure_services.yml for instance-debian, instance-oracle, instance-ubuntu
+
+TASK [my_ansible_role : Make sure service is enabled and starts at boot] *******
+skipping: [instance-debian]
+skipping: [instance-oracle]
+skipping: [instance-ubuntu]
+
+PLAY RECAP *********************************************************************
+instance-debian            : ok=7    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+instance-oracle            : ok=7    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+instance-ubuntu            : ok=7    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Running default > idempotence
+
+PLAY [Converge] ****************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [instance-debian]
+ok: [instance-ubuntu]
+ok: [instance-oracle]
+
+TASK [Test My Ansible Role] ****************************************************
+
+TASK [my_ansible_role : Set Debian-specific variables] *************************
+ok: [instance-debian]
+ok: [instance-oracle]
+ok: [instance-ubuntu]
+
+TASK [my_ansible_role : Pre-flight checks] *************************************
+included: /Users/reinoudvanleeuwen/blah/cookiecuttertest/my_ansible_role/tasks/preflight.yml for instance-debian, instance-oracle, instance-ubuntu
+
+TASK [my_ansible_role : Check OS family] ***************************************
+ok: [instance-debian] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+ok: [instance-oracle] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+ok: [instance-ubuntu] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [my_ansible_role : Install needed packages] *******************************
+included: /Users/reinoudvanleeuwen/blah/cookiecuttertest/my_ansible_role/tasks/install_packages.yml for instance-debian, instance-oracle, instance-ubuntu
+
+TASK [my_ansible_role : Install example package] *******************************
+ok: [instance-oracle]
+ok: [instance-debian]
+ok: [instance-ubuntu]
+
+TASK [my_ansible_role : Configure package] *************************************
+
+TASK [my_ansible_role : Configure services] ************************************
+included: /Users/reinoudvanleeuwen/blah/cookiecuttertest/my_ansible_role/tasks/configure_services.yml for instance-debian, instance-oracle, instance-ubuntu
+
+TASK [my_ansible_role : Make sure service is enabled and starts at boot] *******
+skipping: [instance-debian]
+skipping: [instance-oracle]
+skipping: [instance-ubuntu]
+
+PLAY RECAP *********************************************************************
+instance-debian            : ok=7    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+instance-oracle            : ok=7    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+instance-ubuntu            : ok=7    changed=0    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Idempotence completed successfully.
+INFO     Running default > side_effect
+WARNING  Skipping, side effect playbook not configured.
+INFO     Running default > verify
+INFO     Running Ansible Verifier
+
+PLAY [Check if apache is installed and running] ********************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [instance-debian]
+ok: [instance-ubuntu]
+ok: [instance-oracle]
+
+TASK [Include vars for linux family] *******************************************
+ok: [instance-debian]
+ok: [instance-oracle]
+ok: [instance-ubuntu]
+
+TASK [Check if apache is installed] ********************************************
+changed: [instance-debian]
+changed: [instance-ubuntu]
+changed: [instance-oracle]
+
+PLAY RECAP *********************************************************************
+instance-debian            : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+instance-oracle            : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+instance-ubuntu            : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+INFO     Verifier completed successfully.
+INFO     Running default > cleanup
+WARNING  Skipping, cleanup playbook not configured.
+INFO     Running default > destroy
+
+PLAY [Destroy] *****************************************************************
+
+TASK [Populate instance config] ************************************************
+ok: [localhost]
+
+TASK [Dump instance config] ****************************************************
+skipping: [localhost]
+
+TASK [Stop containers] *********************************************************
+changed: [localhost] => (item={'image': 'mipguerrero26/ubuntu-python3', 'name': 'instance-ubuntu', 'pre_build_image': True})
+changed: [localhost] => (item={'image': 'python:3.12.0-bookworm', 'name': 'instance-debian', 'pre_build_image': True})
+changed: [localhost] => (item={'image': 'aptplatforms/oraclelinux-python', 'name': 'instance-oracle', 'pre_build_image': True})
+
+TASK [Remove containers] *******************************************************
+ok: [localhost] => (item={'image': 'mipguerrero26/ubuntu-python3', 'name': 'instance-ubuntu', 'pre_build_image': True})
+ok: [localhost] => (item={'image': 'python:3.12.0-bookworm', 'name': 'instance-debian', 'pre_build_image': True})
+ok: [localhost] => (item={'image': 'aptplatforms/oraclelinux-python', 'name': 'instance-oracle', 'pre_build_image': True})
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=3    changed=1    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+INFO     Pruning extra files from scenario ephemeral directory
 ```
