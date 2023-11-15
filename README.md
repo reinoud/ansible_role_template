@@ -21,14 +21,18 @@ Usage
 - Follow the prompts to customize the generated role.
 - search for TODO in the generated role to change it in something useable
 
-Template Variables
+Cookiecutter Template Variables
 ------
+
+Cookiecutter has some variables (defined in `cookiecutter.json`), that are used in the template. The values are asked (with some sane generated defaults) when the template is called with the `cookiecutter` command:
+
 - rolename: The long name of the Ansible role including spaces.
 - rolename_slug: the valid name as used in Ansible and on the filesystem
 - name: The name of the author.
 - email: The email address of the author.
 - generate_git_repository: create a local git repository after the role has been created
 
+In the template they are used in their namespace: `{{ cookiecutter.rolename_slug}}`
 
 Maintenance of the template
 -------
@@ -60,7 +64,7 @@ will generate this:
 `my_ansile_rol_packagename: 'apache2'`
 
 
-Testing
+Testing the generated role
 -------
 The generated Ansible role has the molecule testing framework built in! This will test the role using dockers in different Linux
 flavors. To make this work:
@@ -72,7 +76,7 @@ flavors. To make this work:
 
 to start a full test run, execute `molecule test` from a directory within the role.
 
-Example
+Example usage of the template
 ----
 
 command:
