@@ -2,7 +2,7 @@
 Overview
 ========
 
-This is a (cookiecutter) template to generate a new Ansible role including a working test environment using Molecule
+This is a ([cookiecutter](https://cookiecutter.readthedocs.io/en/stable/)) template to generate a new Ansible role including a working test environment using the [Molecule](https://ansible.readthedocs.io/projects/molecule/) test environment.
 
 When invoked, cookiecutter will prompt for some variables like names, generate an Ansible role, and initialize a local git repository for it.
 
@@ -14,54 +14,45 @@ The generated role has a working test environment, which can (and should) be ext
 
 When encountering a bug in a role, ideally fix process should start by adding a test that fails initially. This should prevent the bug from ever re-appearing in the future.
 
-Usage
+General usage overview
 -----
+- make sure Python3 is installed
 - Install cookiecutter: `pip install cookiecutter`
 - Generate the Ansible role from the template: `cookiecutter https://gitlab.itcreation.nl/it-creation/ansible/ansible-role-template.git`
 - Follow the prompts to customize the generated role.
-- search for TODO in the generated role to change it in something useable
+- search for TODO in the generated role to change example code in something useable
 
 Cookiecutter Template Variables
 ------
-
 Cookiecutter has some variables (defined in `cookiecutter.json`), that are used in the template. The values are asked (with some sane generated defaults) when the template is called with the `cookiecutter` command:
 
-- rolename: The long name of the Ansible role including spaces.
-- rolename_slug: the valid name as used in Ansible and on the filesystem
-- name: The name of the author.
-- email: The email address of the author.
-- generate_git_repository: create a local git repository after the role has been created
+- `rolename`: The long name of the Ansible role including spaces.
+- `rolename_slug`: the valid name as used in Ansible and on the filesystem
+- `name`: The name of the author.
+- `email`: The email address of the author.
+- `generate_git_repository`: create a local git repository after the role has been created
 
-In the template they are used in their namespace: `{{ cookiecutter.rolename_slug}}`
+In the template they are used in their namespace: `{{ cookiecutter.rolename_slug }}`
 
 Maintenance of the template
 -------
-
 This template uses Jinja2 templating to generate Ansible code that might contain Jinja2 templates itself. This has several consequences:
 
 ### Escaping
 
 All instances of double curly braces (`{{` and `}}` ) need to be escaped by putting them inside double curly brances themself:
 
-Ansible code:
-
-`- name: "Set {{ ansible_os_family  }}-specific variables"`
-
-Template:
-
-`- name: "Set {{ '{{' }} ansible_os_family {{ '}}' }}-specific variables"`
+| Ansible code | Template |
+|--------------|----------|
+| `"{{ ansible_os_family  }}-specific variables"` | `{{ '{{' }} ansible_os_family {{ '}}' }}-specific variables"` |
 
 ### Yaml compliance
 
 Since the names of variables should start with the name of the role, and this is templated. the template files themselve might not be valid yaml:
 
-Template:
-
-`{{ cookiecutter.rolename_slug}}_packagename: 'apache2'`
-
-will generate this:
-
-`my_ansile_rol_packagename: 'apache2'`
+| Ansible code | Template |
+|--------------|----------|
+| `my_ansile_rol_packagename: 'apache2'` |`{{ cookiecutter.rolename_slug}}_packagename: 'apache2'`| 
 
 
 Testing the generated role
@@ -78,7 +69,6 @@ to start a full test run, execute `molecule test` from a directory within the ro
 
 Example usage of the template
 ----
-
 command:
 ```
 cookiecutter https://gitlab.itcreation.nl/it-creation/ansible/ansible-role-template.git
