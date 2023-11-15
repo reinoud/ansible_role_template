@@ -40,11 +40,11 @@ This template uses Jinja2 templating to generate Ansible code that might contain
 
 ### Escaping
 
-All instances of double curly braces (`{{` and `}}` ) need to be escaped by putting them inside double curly brances themself:
+All instances of double curly braces (`{{` and `}}` ) need to be escaped by putting them inside double curly brances themself. Note that you should use the other type of quotes than the surrounding string uses:
 
 | Ansible code | Template |
 |--------------|----------|
-| `"{{ ansible_os_family }}-specific variables"` | `{{ '{{' }} ansible_os_family {{ '}}' }}-specific variables"` |
+| `"{{ ansible_os_family }}-specific variables"` | `"{{ '{{' }} ansible_os_family {{ '}}' }}-specific variables"` |
 
 ### Yaml compliance
 
