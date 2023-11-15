@@ -32,7 +32,7 @@ flavors. To make this work:
 - install the Molecule docker driver (`pip3 install 'molecule-plugins[docker]'`)
 - when it is not working, you might have to downgrade the Python requests library (`pip3 install requests==2.28.1`)
 
-to start a full test run, execute `molecule test` from within the role.
+to start a full test run, execute `molecule test` from a directory within the role.
 
 Example
 ----
