@@ -8,4 +8,4 @@
     state: started
   # Only run this task if we are not in a molecule test run since systemd
   # is not available when running in docker
-  when: "not in_molecule_test_run"
+  when: "not {{ cookiecutter.rolename_slug}}_in_molecule_test_run"

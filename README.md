@@ -33,7 +33,7 @@ To be able to work around this limitation, the scenario is called with the varia
     name: "{{ '{{' }} {{ cookiecutter.rolename_slug}}_servicename {{ '}}' }}"
     enabled: yes
     state: started
-  when: "not in_molecule_test_run"
+  when: "not {{ cookiecutter.rolename_slug}}_in_molecule_test_run"
 ```
 
 Cookiecutter Template Variables

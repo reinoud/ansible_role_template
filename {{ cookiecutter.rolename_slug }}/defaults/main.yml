@@ -3,3 +3,4 @@
 # by convention, all variables are in lower case and use underscores, and
 # should start with {{ cookiecutter.rolename }} to avoid conflicts
 {{ cookiecutter.rolename_slug }}_packagename: ''
+{{ cookiecutter.rolename_slug}}_in_molecule_test_run: False
