@@ -60,7 +60,7 @@ output:
     1 - yes
     2 - no
     Choose from [1/2] (1):
-Initialized empty Git repository in /Users/reinoudvanleeuwen/blah/cookiecuttertest/my_ansible_role/.git/
+Initialized empty Git repository in /Users/reinoudvanleeuwen/git/ansible/my_ansible_role/.git/
 [main (root-commit) 1637aa1] Initial commit
  19 files changed, 284 insertions(+)
  create mode 100644 README.md
