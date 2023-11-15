@@ -64,7 +64,7 @@ All instances of double curly braces (`{{` and `}}` ) need to be escaped by putt
 
 Since the names of variables should start with the name of the role, and this is templated. the template files themselve might not be valid yaml. This example shows the naming convention for variables in the role:
 
-| template | generated Ansible code |
+| template (not valid yaml) | generated Ansible code (valid yaml) |
 |--------------|----------|
 | `{{ cookiecutter.rolename_slug}}_packagename: 'apache2'` | `my_ansile_role_packagename: 'apache2'` |
 
