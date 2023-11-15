@@ -42,17 +42,17 @@ This template uses Jinja2 templating to generate Ansible code that might contain
 
 All instances of double curly braces (`{{` and `}}` ) need to be escaped by putting them inside double curly brances themself. Note that you should use the other type of quotes than the surrounding string uses:
 
-| Ansible code | Template |
+| template | generated Ansible code |
 |--------------|----------|
-| `"{{ ansible_os_family }}-specific variables"` | `"{{ '{{' }} ansible_os_family {{ '}}' }}-specific variables"` |
+| `"{{ '{{' }} ansible_os_family {{ '}}' }}-specific variables"` | `"{{ ansible_os_family }}-specific variables"` |
 
 ### Yaml compliance
 
 Since the names of variables should start with the name of the role, and this is templated. the template files themselve might not be valid yaml. This example shows the naming convention for variables in the role:
 
-| Ansible code | Template |
+| template | generated Ansible code |
 |--------------|----------|
-| `my_ansile_role_packagename: 'apache2'` |`{{ cookiecutter.rolename_slug}}_packagename: 'apache2'`|
+| `{{ cookiecutter.rolename_slug}}_packagename: 'apache2'` | `my_ansile_role_packagename: 'apache2'` |
 
 
 Testing the generated role
