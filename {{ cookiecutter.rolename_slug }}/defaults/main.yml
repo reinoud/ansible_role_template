@@ -2,4 +2,4 @@
 # defaults file for {{ cookiecutter.rolename }}
 # by convention, all variables are in lower case and use underscores, and
 # should start with {{ cookiecutter.rolename }} to avoid conflicts
-{{ cookiecutter.rolename }}_packagename: ''
+{{ cookiecutter.rolename_slug }}_packagename: ''
