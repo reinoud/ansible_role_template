@@ -6,6 +6,14 @@ This is a (cookiecutter) template to generate a new Ansible role including a wor
 
 When invoked, cookiecutter will prompt for some variables like names, generate an Ansible role, and initialize a local git repository for it.
 
+Purpose
+----
+
+Starting all new roles from a centrally managed template facilitates standaardisation of Ansible roles. The structure of all new roles is similar, which easfies maintenance and makes them more readable.
+The generated role has a working test environment, which can (and should) be extended to test more complex scenarios in multiple Linux flavors, and possibly Windows versions as well. By starting to test the roles from day one, the purpose is to improve quality and prevent bugs.
+
+When encountering a bug in a role, ideally fix process should start by adding a test that fails initially. This should prevent the bug from ever re-appearing in the future.
+
 Usage
 -----
 - Install cookiecutter: `pip install cookiecutter`
