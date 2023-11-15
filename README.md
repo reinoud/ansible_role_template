@@ -37,4 +37,42 @@ to start a full test run, execute `molecule test` from a directory within the ro
 Example
 ----
 
-    cookiecutter https://gitlab.itcreation.nl/it-creation/ansible/ansible-role-template.git
+command:
+```
+cookiecutter https://gitlab.itcreation.nl/it-creation/ansible/ansible-role-template.git
+```
+output:
+```
+
+  [1/5] rolename (My Ansible Role):
+  [2/5] rolename_slug (my_ansible_role):
+  [3/5] author (John Doe):
+  [4/5] email (john.doe@itcreation.nl):
+  [5/5] Select generate_git_repository
+    1 - yes
+    2 - no
+    Choose from [1/2] (1):
+Initialized empty Git repository in /Users/reinoudvanleeuwen/blah/cookiecuttertest/my_ansible_role/.git/
+[main (root-commit) 1637aa1] Initial commit
+ 19 files changed, 284 insertions(+)
+ create mode 100644 README.md
+ create mode 100644 defaults/main.yml
+ create mode 100644 handlers/main.yml
+ create mode 100644 meta/main.yml
+ create mode 100644 molecule/default/converge.yml
+ create mode 100644 molecule/default/create.yml
+ create mode 100644 molecule/default/destroy.yml
+ create mode 100644 molecule/default/molecule.yml
+ create mode 100644 molecule/default/verify.yml
+ create mode 100644 molecule/default/verify_vars/debian.yml
+ create mode 100644 molecule/default/verify_vars/redhat.yml
+ create mode 100644 tasks/configure_packages.yml
+ create mode 100644 tasks/configure_services.yml
+ create mode 100644 tasks/install_packages.yml
+ create mode 100644 tasks/main.yml
+ create mode 100644 tasks/preflight.yml
+ create mode 100644 vars/debian.yml
+ create mode 100644 vars/main.yml
+ create mode 100644 vars/redhat.yml
+initialized git repo
+```
