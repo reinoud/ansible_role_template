@@ -44,7 +44,7 @@ All instances of double curly braces (`{{` and `}}` ) need to be escaped by putt
 
 | Ansible code | Template |
 |--------------|----------|
-| `"{{ ansible_os_family  }}-specific variables"` | `{{ '{{' }} ansible_os_family {{ '}}' }}-specific variables"` |
+| `"{{ ansible_os_family }}-specific variables"` | `{{ '{{' }} ansible_os_family {{ '}}' }}-specific variables"` |
 
 ### Yaml compliance
 
