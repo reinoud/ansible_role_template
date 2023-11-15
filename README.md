@@ -25,7 +25,7 @@ General usage overview
 Limitations
 -----
 As a result of the architecture of Docker, `systemd` is not available in containers that mimic a full VM. This means that the Ansible role cannot enable and start a real service.
-To be able to work around this limitation, the scenario is called with the variable `in_molecule_test_run`, so the code can check this:
+To be able to work around this limitation, the scenario is called with the variable `in_molecule_test_run` (with correct prefix), so the code can check this:
 
 ```
 - name: Make sure service is enabled and starts at boot
