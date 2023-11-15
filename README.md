@@ -30,6 +30,36 @@ Template Variables
 - generate_git_repository: create a local git repository after the role has been created
 
 
+Maintenance of the template
+-------
+
+This template uses Jinja2 templating to generate Ansible code that might contain Jinja2 templates itself. This has several consequences:
+
+### Escaping
+
+All instances of double curly braces (`{{` and `}}` ) need to be escaped by putting them inside double curly brances themself:
+
+Ansible code:
+
+`- name: "Set {{ ansible_os_family  }}-specific variables"`
+
+Template:
+
+`- name: "Set {{ '{{' }} ansible_os_family {{ '}}' }}-specific variables"`
+
+### Yaml compliance
+
+Since the names of variables should start with the name of the role, and this is templated. the template files themselve might not be valid yaml:
+
+Template:
+
+`{{ cookiecutter.rolename_slug}}_packagename: 'apache2'`
+
+will generate this:
+
+`my_ansile_rol_packagename: 'apache2'`
+
+
 Testing
 -------
 The generated Ansible role has the molecule testing framework built in! This will test the role using dockers in different Linux
