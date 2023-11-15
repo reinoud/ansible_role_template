@@ -66,7 +66,7 @@ Since the names of variables should start with the name of the role, and this is
 
 | template (not valid yaml) | generated Ansible code (valid yaml) |
 |--------------|----------|
-| `{{ cookiecutter.rolename_slug}}_packagename: 'apache2'` | `my_ansile_role_packagename: 'apache2'` |
+| `{{ cookiecutter.rolename_slug}}_packagename: 'apache2'` | `my_ansible_role_packagename: 'apache2'` |
 
 
 Testing the generated role
