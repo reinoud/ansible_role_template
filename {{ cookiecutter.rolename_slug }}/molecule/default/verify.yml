@@ -1,5 +1,9 @@
 # verify.yml is responsible for verifying that the apache service is installed and running on the target host.
 # If the service is not installed, the playbook should fail. If the service is not running, the playbook should fail.
+# <TODO> change this to check for what the role actually should do
+# <TODO> Add checks for every bug found in the lifecycle of the role
+
+# Example of a test that checks if apache is installed and running
 - name: Check if apache is installed and running
   hosts: all
   # facts are needed to set ansible_os_family
