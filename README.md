@@ -91,13 +91,17 @@ cookiecutter https://gitlab.itcreation.nl/it-creation/ansible/ansible-role-templ
 output:
 ```
 
-  [1/5] rolename (My Ansible Role):
-  [2/5] rolename_slug (my_ansible_role):
-  [3/5] author (John Doe):
-  [4/5] email (john.doe@itcreation.nl):
-  [5/5] Select generate_git_repository
+  [1/6] rolename (My Ansible Role):
+  [2/6] rolename_slug (my_ansible_role):
+  [3/6] author (John Doe):
+  [4/6] email (john.doe@itcreation.nl):
+  [5/6] Select generate_git_repository
     1 - yes
     2 - no
+    Choose from [1/2] (1):
+  [6/6] Select include_example_code
+    1 - no
+    2 - yes
     Choose from [1/2] (1):
 Initialized empty Git repository in /Users/reinoudvanleeuwen/git/ansible/my_ansible_role/.git/
 [main (root-commit) 1637aa1] Initial commit
