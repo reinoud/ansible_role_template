@@ -7,4 +7,5 @@
       ansible.builtin.include_role:
         name: '{{ cookiecutter.rolename_slug }}'
       vars:
+        # pass var to let the role know it's being run in a molecule test
         {{ cookiecutter.rolename_slug}}_in_molecule_test_run: True

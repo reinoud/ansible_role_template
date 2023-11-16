@@ -1,6 +1,7 @@
 ---
-# Configure the installed services state
+# Configure the installed services state (enabled, running, etc)
 
+{%- if cookiecutter.include_example_code == 'yes' %}
 - name: Make sure service is enabled and starts at boot
   ansible.builtin.systemd:
     name: "{{ '{{' }} {{ cookiecutter.rolename_slug}}_servicename {{ '}}' }}"
@@ -9,3 +10,10 @@
   # Only run this task if we are not in a molecule test run since systemd
   # is not available when running in docker
   when: "not {{ cookiecutter.rolename_slug}}_in_molecule_test_run"
+{% else %}
+# Note:
+# To only run this task if we are not in a molecule test run (since systemd
+# is not available when running in docker) add the following to the task:
+#  when: "not {{ cookiecutter.rolename_slug}}_in_molecule_test_run"
+
+{% endif %}

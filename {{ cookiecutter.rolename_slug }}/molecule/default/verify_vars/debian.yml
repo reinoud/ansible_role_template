@@ -1,3 +1,5 @@
 ---
 # Define Debian-specific vars needed during the molecule verify phase
+{%- if cookiecutter.include_example_code == 'yes' %}
 {{ cookiecutter.rolename_slug }}_testbinary: 'apache2'
+{% endif %}

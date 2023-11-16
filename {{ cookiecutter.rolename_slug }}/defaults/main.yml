@@ -1,6 +1,8 @@
 ---
 # defaults file for {{ cookiecutter.rolename }}
 # by convention, all variables are in lower case and use underscores, and
-# should start with {{ cookiecutter.rolename }} to avoid conflicts
+# should start with '{{ cookiecutter.rolename_slug }}'' to avoid conflicts with variables in other roles
+{%- if cookiecutter.include_example_code == 'yes' %}
 {{ cookiecutter.rolename_slug }}_packagename: ''
+{% endif %}
 {{ cookiecutter.rolename_slug}}_in_molecule_test_run: False

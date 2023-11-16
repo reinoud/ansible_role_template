@@ -1,6 +1,8 @@
 ---
 # Add needed repositories and install packages
+{%- if cookiecutter.include_example_code == 'yes' %}
 - name: Install example package
   ansible.builtin.package:
     name: "{{ '{{' }} {{ cookiecutter.rolename_slug}}_packagename {{ '}}' }}"
     state: present
+{% endif %}

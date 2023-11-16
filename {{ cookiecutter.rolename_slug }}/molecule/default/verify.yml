@@ -3,6 +3,7 @@
 # <TODO> change this to check for what the role actually should do
 # <TODO> Add checks for every bug found in the lifecycle of the role
 
+{%- if cookiecutter.include_example_code == 'yes' %}
 # Example of a test that checks if apache is installed and running
 - name: Check if apache is installed and running
   hosts: all
@@ -18,3 +19,17 @@
       ansible.builtin.command: 'which {{ "{{" }} {{ cookiecutter.rolename_slug }}_testbinary {{ "}}" }}'
       register: apache_installed
       failed_when: apache_installed.rc != 0
+{% else %}
+- name: Verify if {{ cookiecutter.rolename_slug }} has done everything it should
+  hosts: all
+  # facts are needed to set ansible_os_family
+  gather_facts: true
+  tasks:
+    # load linux-family specific vars needed during verify
+    # - name: Include vars for linux family
+    #   ansible.builtin.include_vars:
+    #     file: "{{ '{{' }} lookup('env', 'MOLECULE_SCENARIO_DIRECTORY') }}/verify_vars/{{ '{{' }} ansible_os_family {{ '}}' }}.yml"
+    - name: feedback
+      ansible.builtin.debug:
+        msg: "No example code included; nothing to verify."
+{% endif %}
