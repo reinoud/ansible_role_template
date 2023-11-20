@@ -3,4 +3,4 @@
 {%- if cookiecutter.include_example_code == 'yes' %}
 {{ cookiecutter.rolename_slug}}_packagename: 'httpd'
 {{ cookiecutter.rolename_slug}}_servicename: 'httpd.service'
-{% endif %}
+{%- endif %}

@@ -19,7 +19,7 @@
       ansible.builtin.command: 'which {{ "{{" }} {{ cookiecutter.rolename_slug }}_testbinary {{ "}}" }}'
       register: apache_installed
       failed_when: apache_installed.rc != 0
-{% else %}
+{%- else %}
 - name: Verify if {{ cookiecutter.rolename_slug }} has done everything it should
   hosts: all
   # facts are needed to set ansible_os_family
@@ -29,7 +29,7 @@
     # - name: Include vars for linux family
     #   ansible.builtin.include_vars:
     #     file: "{{ '{{' }} lookup('env', 'MOLECULE_SCENARIO_DIRECTORY') }}/verify_vars/{{ '{{' }} ansible_os_family {{ '}}' }}.yml"
-    - name: feedback
+    - name: Feedback
       ansible.builtin.debug:
         msg: "No example code included; nothing to verify."
-{% endif %}
+{%- endif %}

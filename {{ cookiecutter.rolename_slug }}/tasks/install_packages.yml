@@ -5,4 +5,4 @@
   ansible.builtin.package:
     name: "{{ '{{' }} {{ cookiecutter.rolename_slug}}_packagename {{ '}}' }}"
     state: present
-{% endif %}
+{%- endif %}

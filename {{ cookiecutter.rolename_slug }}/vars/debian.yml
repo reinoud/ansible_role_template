@@ -3,4 +3,4 @@
 {%- if cookiecutter.include_example_code == 'yes' %}
 {{ cookiecutter.rolename_slug}}_packagename: 'apache2'
 {{ cookiecutter.rolename_slug}}_servicename: 'apache2.service'
-{% endif %}
+{%- endif %}

@@ -5,4 +5,4 @@
 {%- if cookiecutter.include_example_code == 'yes' %}
 {{ cookiecutter.rolename_slug }}_packagename: ''
 {% endif %}
-{{ cookiecutter.rolename_slug}}_in_molecule_test_run: False
+{{ cookiecutter.rolename_slug}}_in_molecule_test_run: false
