@@ -17,9 +17,10 @@ When encountering a bug in a role, ideally fix process should start by adding a 
 General usage overview
 -----
 - make sure Python3 is installed
-- Install cookiecutter: `pip install cookiecutter`
+- Install cookiecutter: `pip install cookiecutter` (maybe `pip3 install cookiecutter`)
 - Generate the Ansible role from the template: `cookiecutter https://gitlab.itcreation.nl/it-creation/ansible/ansible-role-template.git`
-- Follow the prompts to customize the generated role.
+- Follow the prompts to customize the generated role. (see below for an example)
+- you might want to run the test suite to see a working test out of the box (if you have chosen to install the example code)
 - search for TODO in the generated role to change example code in something useable
 
 Limitations
@@ -47,7 +48,7 @@ Cookiecutter has some variables (defined in `cookiecutter.json`), that are used 
 - `generate_git_repository`: create a local git repository after the role has been created
 - `include_example_code`: include some example code to start with a working test setup
 
-In the template they are used in their namespace: `{{ cookiecutter.rolename_slug }}`
+In the template all cookiecutter variables are used in their namespace: `{{ cookiecutter.rolename_slug }}`
 
 Maintenance of the template
 -------
