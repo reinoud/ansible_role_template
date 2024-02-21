@@ -18,7 +18,7 @@ General usage overview
 -----
 - make sure Python3 is installed
 - Install cookiecutter: `pip install cookiecutter` (maybe `pip3 install cookiecutter`)
-- Generate the Ansible role from the template: `cookiecutter https://gitlab.itcreation.nl/it-creation/ansible/ansible-role-template.git`
+- Generate the Ansible role from the template: `cookiecutter https://YOURGITLAB/it-creation/ansible/ansible-role-template.git`
 - Follow the prompts to customize the generated role. (see below for an example)
 - you might want to run the test suite to see a working test out of the box (if you have chosen to install the example code)
 - search for TODO in the generated role to change example code in something useable
@@ -87,7 +87,7 @@ Example usage of the template
 ----
 command:
 ```
-cookiecutter https://gitlab.itcreation.nl/it-creation/ansible/ansible-role-template.git
+cookiecutter https://YOURDOMAIN/it-creation/ansible/ansible-role-template.git
 ```
 output:
 ```
@@ -95,7 +95,7 @@ output:
   [1/6] rolename (My Ansible Role):
   [2/6] rolename_slug (my_ansible_role):
   [3/6] author (John Doe):
-  [4/6] email (john.doe@itcreation.nl):
+  [4/6] email (john.doe@YOURDOMAIN)
   [5/6] Select generate_git_repository
     1 - yes
     2 - no
